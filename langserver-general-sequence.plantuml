@@ -1,0 +1,36 @@
+@startuml lsp-general-sequence
+title Language Server Protocol (JSON-RPC)
+skinparam sequence {
+MessageAlignment center
+
+ArrowColor DeepSkyBlue
+ActorBorderColor DeepSkyBlue
+LifeLineBorderColor blue
+LifeLineBackgroundColor #A9DCDF
+
+ParticipantBorderColor DeepSkyBlue
+ParticipantBackgroundColor DodgerBlue
+ParticipantFontColor #FFFFF
+ParticipantFontSize 14
+
+ActorBackgroundColor aqua
+ActorFontColor #FFFFF
+ActorFontName Aapex
+}
+
+"Development Tool" -> "Language Server": //Notification//: textDocument/didOpen; //Params//: {documentURI, text}
+
+"Development Tool" <- "Language Server": //Notification//: textDocument/publishDiagnostics; //Params//: {Diagnostic[]}
+
+"Development Tool" -> "Language Server": //Request//: textDocument/definition; //Params//: {documentURI, position}
+activate "Development Tool"
+return //Response//: textDocument/definition; //Result//: {Location}
+deactivate "Development Tool"
+
+"Development Tool" -> "Language Server": //Notification//: textDocument/didChange; //Params//: {documentURI, changes}
+
+"Development Tool" <- "Language Server": //Notification//: textDocument/publishDiagnostics; //Params//: {Diagnostic[]}
+
+"Development Tool" -> "Language Server": //Notification//: textDocument/didClose; //Params//: {documentURI}
+
+@enduml
